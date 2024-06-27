@@ -1,4 +1,4 @@
-FROM ruby:3.0.0-alpine3.13
+FROM ruby:3.0.2-alpine3.13
 
 LABEL maintainer="Matheus M<mmacedo@icasei.com.br>"
 
