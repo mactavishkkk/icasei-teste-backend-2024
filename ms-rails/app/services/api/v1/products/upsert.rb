@@ -23,7 +23,7 @@ module Services
 
               product.save!
 
-              # Karafka.producer.produce_sync(topic: 'rails-to-go', payload: product.to_json) if !!params[:is_api]
+              Karafka.producer.produce_sync(topic: 'rails-to-go', payload: product.to_json) if !!params[:is_api]
             end
             
             product
