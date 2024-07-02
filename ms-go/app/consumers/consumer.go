@@ -26,8 +26,6 @@ func StartKafkaConsumer() {
 		log.Fatalf("Failed to create consumer: %v", err)
 	}
 
-	defer c.Close()
-
 	topic := "rails-to-go"
 	c.SubscribeTopics([]string{topic}, nil)
 
@@ -69,4 +67,5 @@ func StartKafkaConsumer() {
 	}
 
 	fmt.Println("Closing consumer")
+	c.Close()
 }
