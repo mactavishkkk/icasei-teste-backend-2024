@@ -52,13 +52,29 @@ func StartKafkaConsumer() {
 					continue
 				}
 
-				_, err = products.Create(product, false)
+				existingProduct, err := products.Details(product)
 				if err != nil {
-					fmt.Printf("Failed to create product: %v\n", err)
+					fmt.Printf("Failed to retrieve existing product: %v\n", err)
 					continue
 				}
 
-				fmt.Println("Product created successfully")
+				if existingProduct != nil {
+					fmt.Println("Product already exists, updating...")
+					_, err = products.Update(product, true)
+					if err != nil {
+						fmt.Printf("Failed to update product: %v\n", err)
+						continue
+					}
+				} else {
+					fmt.Println("Product does not exist, creating...")
+					_, err = products.Create(product, false)
+					if err != nil {
+						fmt.Printf("Failed to create product: %v\n", err)
+						continue
+					}
+				}
+
+				fmt.Println("Product processed successfully")
 			case kafka.Error:
 				fmt.Printf("Error: %v\n", e)
 				run = false
