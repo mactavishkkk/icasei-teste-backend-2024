@@ -1,24 +1,10 @@
-# README
+# Projeto de Exemplo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este é um projeto de exemplo usando Rails e Karafka(kafka).
 
-Things you may want to cover:
+## Estrutura do Projeto
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `app/`: Contém todo o código da aplicação Rails.
+- `config/`: Configurações gerais da aplicação.
+- `app/consumers/`: Consumers para processamento de mensagens Kafka.
+- `config/karafka.rb`: Configuração do Karafka para consumir e produzir mensagens Kafka.
