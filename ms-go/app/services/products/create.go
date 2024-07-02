@@ -2,8 +2,10 @@ package products
 
 import (
 	"context"
+	"fmt"
 	"ms-go/app/helpers"
 	"ms-go/app/models"
+	"ms-go/app/producers"
 	"ms-go/db"
 	"net/http"
 	"time"
@@ -39,9 +41,25 @@ func Create(data models.Product, isAPI bool) (*models.Product, error) {
 		return nil, &helpers.GenericError{Msg: err.Error(), Code: http.StatusInternalServerError}
 	}
 
+	err = producers.InitKafkaProducer()
+    if err != nil {
+        fmt.Printf("Error initializing Kafka producer: %v\n", err)
+    }
+
+	topic := "go-to-rails"
+
+	err = producers.ProduceMessage(topic, data)
+    if err != nil {
+        fmt.Printf("Error producing message for topic %s: %v\n", topic, err)
+    }
+
+    fmt.Println("Message successfully sent to topic", topic)
+	
+    defer producers.CloseKafkaProducer()
 	defer db.Disconnect()
 
 	if isAPI {
+		;
 	}
 
 	return &data, nil
